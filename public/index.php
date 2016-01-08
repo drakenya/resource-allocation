@@ -12,9 +12,34 @@ require __DIR__ . '/../vendor/autoload.php';
 
 session_start();
 
+$capsule = new \Illuminate\Database\Capsule\Manager();
+$capsule->addConnection([
+    'driver' => 'sqlite',
+    'database' => __DIR__ . '/../data/database.db',
+]);
+$capsule->bootEloquent();
+
 // Instantiate the app
 $settings = require __DIR__ . '/../src/settings.php';
-$app = new \Slim\App($settings);
+
+// Set up PDO
+$container = new \Slim\Container($settings);
+$container['pdo'] = function ($container) {
+    return new \PDO('sqlite:' . __DIR__ . '/../data/database.db');
+};
+
+$container['view'] = function ($c) {
+    $view = new \Slim\Views\Twig(__DIR__ . '/../templates');
+
+    $view->addExtension(new Slim\Views\TwigExtension(
+        $c['router'],
+        $c['request']->getUri()
+    ));
+
+    return $view;
+};
+
+$app = new \Slim\App($container);
 
 // Set up dependencies
 require __DIR__ . '/../src/dependencies.php';
