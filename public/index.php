@@ -20,35 +20,23 @@ $capsule->addConnection([
 $capsule->bootEloquent();
 
 // Instantiate the app
-$settings = require __DIR__ . '/../src/settings.php';
+$settings = require __DIR__ . '/../lib/settings.php';
 
-// Set up PDO
+// Set up containers
 $container = new \Slim\Container($settings);
-$container['pdo'] = function ($container) {
-    return new \PDO('sqlite:' . __DIR__ . '/../data/database.db');
-};
+require __DIR__ . '/../lib/containers.php';
 
-$container['view'] = function ($c) {
-    $view = new \Slim\Views\Twig(__DIR__ . '/../templates');
-
-    $view->addExtension(new Slim\Views\TwigExtension(
-        $c['router'],
-        $c['request']->getUri()
-    ));
-
-    return $view;
-};
-
+// Start the app
 $app = new \Slim\App($container);
 
 // Set up dependencies
-require __DIR__ . '/../src/dependencies.php';
+require __DIR__ . '/../lib/dependencies.php';
 
 // Register middleware
-require __DIR__ . '/../src/middleware.php';
+require __DIR__ . '/../lib/middleware.php';
 
 // Register routes
-require __DIR__ . '/../src/routes.php';
+require __DIR__ . '/../lib/routes.php';
 
 // Run app
 $app->run();
