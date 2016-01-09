@@ -1,6 +1,7 @@
 <?php
 
 use Phinx\Seed\AbstractSeed;
+use Illuminate\Support;
 
 class UserSeeder extends AbstractSeed
 {
@@ -21,9 +22,9 @@ class UserSeeder extends AbstractSeed
         ]);
         $capsule->bootEloquent();
 
-        \Cartalyst\Sentinel\Native\Facades\Sentinel::register([
+        \Cartalyst\Sentinel\Native\Facades\Sentinel::registerAndActivate([
             'email' => 'andrew@example.com',
-            'password' => 'password'
+            'password' => 'password',
         ]);
 
     }

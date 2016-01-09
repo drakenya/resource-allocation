@@ -15,6 +15,17 @@ $container['view'] = function ($container) {
     return $view;
 };
 
-$container['TestController'] = function ($container) {
-    return new \Drakenya\ResAll\Controllers\TestController($container);
+$container['IndexController'] = function ($container) {
+    return new \Drakenya\ResAll\Controllers\IndexController($container);
+};
+$container['AuthController'] = function ($container) {
+    return new \Drakenya\ResAll\Controllers\AuthController($container);
+};
+$container['ResourceController'] = function ($container) {
+    return new \Drakenya\ResAll\Controllers\ResourceController($container);
+};
+
+$container['sentinel'] = function ($container) {
+    $bootstrapper = new Cartalyst\Sentinel\Native\SentinelBootstrapper;
+    return $bootstrapper->createSentinel();
 };

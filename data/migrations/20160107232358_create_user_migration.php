@@ -27,8 +27,56 @@ class CreateUserMigration extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('users');
-        $table->addColumn('email', 'string')
+        $this->table('activations')
+            ->addColumn('user_id', 'integer')
+            ->addColumn('code', 'string')
+            ->addColumn('completed', 'boolean', ['default' => false])
+            ->addColumn('completed_at', 'datetime')
+            ->addColumn('created_at', 'datetime')
+            ->addColumn('updated_at', 'datetime')
+            ->create();
+
+        $this->table('persistences')
+            ->addColumn('user_id', 'integer')
+            ->addColumn('code', 'string')
+            ->addColumn('created_at', 'datetime')
+            ->addColumn('updated_at', 'datetime')
+            ->create();
+
+        $this->table('reminders')
+            ->addColumn('user_id', 'integer')
+            ->addColumn('code', 'string')
+            ->addColumn('completed', 'boolean', ['default' => false])
+            ->addColumn('completed_at', 'datetime')
+            ->addColumn('created_at', 'datetime')
+            ->addColumn('updated_at', 'datetime')
+            ->create();
+
+        $this->table('roles')
+            ->addColumn('slug', 'string')
+            ->addColumn('name', 'string')
+            ->addColumn('permissions', 'string')
+            ->addColumn('created_at', 'datetime')
+            ->addColumn('updated_at', 'datetime')
+            ->create();
+
+        $this->table('role_users')
+            ->addColumn('user_id', 'integer')
+            ->addColumn('role_id', 'integer')
+            ->addColumn('created_at', 'datetime')
+            ->addColumn('updated_at', 'datetime')
+            ->create();
+
+        $this->table('throttle')
+            ->addColumn('user_id', 'integer')
+            ->addColumn('type', 'string')
+            ->addColumn('ip', 'string')
+            ->addColumn('created_at', 'datetime')
+            ->addColumn('updated_at', 'datetime')
+            ->create();
+
+        $this->table('users')
+            ->addColumn('email', 'string')
             ->addColumn('password', 'string')
             ->addColumn('permissions', 'string')
             ->addColumn('last_login', 'datetime')
