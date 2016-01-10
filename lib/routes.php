@@ -9,13 +9,17 @@ $app->group('/auth/', function () {
 
 $app->group('/resource/', function () {
     $this->get('list', 'ResourceController:listing')->setName('list-resources');
+    $this->get('details/{id}', 'ResourceController:details')->setName('resource-details');
+    $this->get('request', 'ResourceController:request')->setName('request-resource');
+    $this->post('request-action', 'ResourceController:request_action')->setName('request-resource-action');
 })->add(function ($request, $response, $next) {
-  if (!$this->sentinel->check()) {
-    return $response->withRedirect('/auth/login');
-  }
+    // Require user to be logged in to see resource information
+    if (!$this->sentinel->check()) {
+        return $response->withRedirect('/auth/login');
+    }
 
-  $response = $next($request, $response);
-  return $response;
+    $response = $next($request, $response);
+    return $response;
 });
 
 $app->get('/', 'IndexController:index');

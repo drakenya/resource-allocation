@@ -1,0 +1,16 @@
+{% extends "include/base.html.twig" %}
+
+{% block content %}
+    <h1>Request Resource</h1>
+    <div>
+        <form method="post" action="{{ path_for('request-resource-action') }}">
+            <select id="request_type" name="request_type">
+                {% for resource in available_resources %}
+                    <option value="{{ resource.id }}">{{ resource.name }}</option>
+                {% endfor %}
+            </select>
+
+            <input type="submit" value="Request">
+        </form>
+    </div>
+{% endblock %}

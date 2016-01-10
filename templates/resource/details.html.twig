@@ -1,0 +1,23 @@
+{% extends "include/base.html.twig" %}
+
+{% block content %}
+    <h1>Resource Details</h1>
+
+    {% if resource_details.is_expired %}
+        <div>
+            <h2>Expired!</h2>
+        </div>
+    {% endif %}
+
+    <div>
+        <dl>
+            <dt>Unique ID</dt>
+            <dd>{{ resource_details.internal_key }}</dd>
+
+            <dt>Expires At</dt>
+            <dd>{{ resource_details.expires_at }}</dd>
+
+            {% include 'resource/details/' ~ resource_details.internal_class ~ '.html.twig' %}
+        </dl>
+    </div>
+{% endblock %}
