@@ -3,6 +3,10 @@
 {% block content %}
     <h1>Resource Details</h1>
 
+    <div>
+        <a href="{{ path_for('list-resources') }}">Return to Listing</a>
+    </div>
+
     {% if resource_details.is_expired %}
         <div>
             <h2>Expired!</h2>

@@ -8,6 +8,30 @@
     </div>
 
     <div>
-
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Type</th>
+                <th>Internal ID</th>
+                <th>Expires At</th>
+                <th></th>
+                <th></th>
+            </tr>
+            {% for resource in allocated_resources %}
+                <tr>
+                    <th>{{ resource.resource_id }}</th>
+                    <th>{{ resource.name }}</th>
+                    <th>{{ resource.internal_key }}</th>
+                    <th>{{ resource.expires_at }}</th>
+                    <th><a href="{{ path_for('resource-details', { 'id': resource.resource_id }) }}">Details</a></th>
+                    <th>
+                        <form method="post" action="{{ path_for('deallocate-resource-action') }}">
+                            <input type="hidden" id="resource_id" name="resource_id" value="{{ resource.resource_id }}">
+                            <input type="submit" value="Release">
+                        </form>
+                    </th>
+                </tr>
+            {% endfor %}
+        </table>
     </div>
 {% endblock %}

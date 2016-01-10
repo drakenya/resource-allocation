@@ -9,7 +9,10 @@ class SqliteDatabase implements AllocatorInterface {
      * @return array Details about new resource
      */
     public function allocate() {
-        $file_name = tempnam('/tmp', 'db_') . '.db';
+        // Allocate new database
+        $file_name = tempnam('/tmp', 'db_');
+        rename($file_name, $file_name . '.db');
+        $file_name .= '.db';
 
         $data = [
             'file_name' => $file_name,
@@ -24,6 +27,7 @@ class SqliteDatabase implements AllocatorInterface {
      * @param array $data
      */
     public function deallocate($data) {
-
+        // Remove the database from the file system
+        unlink($data['internal_data']['file_name']);
     }
 }

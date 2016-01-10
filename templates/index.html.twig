@@ -1,12 +1,10 @@
 {% extends "include/base.html.twig" %}
 
 {% block content %}
-    <h1>Slim</h1>
-    <div>a microframework for PHP</div>
+    <h1>Resource Allocator</h1>
+    <div>To ... well, to allocate resources.</div>
 
-    {% if name %}
-        <h2>Hello {{ name }}!</h2>
-    {% else %}
-        <p>Try <a href="/SlimFramework">/SlimFramework</a>
-    {% endif %}
+    <div>
+        <a href="{{ path_for('login') }}">Log In</a>
+    </div>
 {% endblock %}

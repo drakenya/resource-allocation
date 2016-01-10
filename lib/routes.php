@@ -12,6 +12,7 @@ $app->group('/resource/', function () {
     $this->get('details/{id}', 'ResourceController:details')->setName('resource-details');
     $this->get('request', 'ResourceController:request')->setName('request-resource');
     $this->post('request-action', 'ResourceController:request_action')->setName('request-resource-action');
+    $this->post('deallocate-action', 'ResourceController:deallocate_action')->setName('deallocate-resource-action');
 })->add(function ($request, $response, $next) {
     // Require user to be logged in to see resource information
     if (!$this->sentinel->check()) {

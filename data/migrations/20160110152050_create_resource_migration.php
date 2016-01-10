@@ -39,6 +39,7 @@ class CreateResourceMigration extends AbstractMigration
             ->addColumn('internal_key', 'string')
             ->addColumn('internal_data', 'string')
             ->addColumn('expires_at', 'datetime')
+            ->addColumn('is_allocated', 'boolean', ['default' => true])
             ->create();
     }
 }

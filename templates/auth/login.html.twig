@@ -3,9 +3,12 @@
 {% block content %}
     <h1>Login</h1>
     <div>
-      <form method="post" action="{{ path_for('login-action') }}">
-        <input id="email" name="email">
-        <input id="password" type="password" name="password">
+        <form method="post" action="{{ path_for('login-action') }}">
+            <label for="email">Email address:</label>
+            <input id="email" name="email">
+
+            <label for="password">Password:</label>
+            <input id="password" type="password" name="password">
 
         <input type="submit" value="Log In">
       </form>

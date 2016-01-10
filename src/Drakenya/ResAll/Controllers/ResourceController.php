@@ -15,8 +15,11 @@ class ResourceController extends \Jgut\Slim\Controller\Base {
      * @return \Psr\Http\Message\ResponseInterface                Final PSR7 response
      */
     public function listing($request, $response, $args) {
-        return $this->view->render($response, 'index.html.twig', [
-            'name' => $args['name']
+        $user_id = $this->current_user->id;
+        $allocated_resources = $this->resource_gateway->get_user_allocated_resources($user_id);
+
+        return $this->view->render($response, 'resource/list.html.twig', [
+            'allocated_resources' => $allocated_resources,
         ]);
     }
 
@@ -75,5 +78,26 @@ class ResourceController extends \Jgut\Slim\Controller\Base {
             'id' => $resource_id,
             'resource_details' => $resource_details,
         ]);
+    }
+
+    /**
+     * Deallocate a user's current resource
+     *
+     * @param  \Psr\Http\Message\ServerRequestInterface $request  PSR7 request
+     * @param  \Psr\Http\Message\ResponseInterface      $response PSR7 response
+     * @param  array                                    $args     Args passed in from URL
+     * @return \Psr\Http\Message\ResponseInterface                Final PSR7 response
+     */
+    public function deallocate_action($request, $response, $args) {
+        $resource_id = $request->getParsedBody()['resource_id'];
+        $resource_details = $this->resource_gateway->get_resource_details($resource_id);
+
+        $allocator_name = $this->resource_gateway->get_allocator_name($resource_id);
+        $allocator = $this->allocator_factory->new_instance($allocator_name);
+
+        $allocator->deallocate($resource_details);
+        $this->resource_gateway->deallocate_resource_from_user($resource_id);
+
+        return $response->withRedirect($this->router->pathFor('list-resources'));
     }
 }
