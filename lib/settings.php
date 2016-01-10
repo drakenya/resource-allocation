@@ -13,5 +13,14 @@ return [
             'name' => 'slim-app',
             'path' => __DIR__ . '/../logs/app.log',
         ],
+
+        // Allocator settings
+        'allocator_settings' => [
+            'MysqlDatabase' => [
+                'host' => 'localhost',
+                'user' => 'root',
+                'password' => 'root',
+            ]
+        ],
     ],
 ];

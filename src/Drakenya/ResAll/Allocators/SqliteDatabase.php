@@ -2,7 +2,7 @@
 
 namespace Drakenya\ResAll\Allocators;
 
-class SqliteDatabase implements AllocatorInterface {
+class SqliteDatabase extends AllocatorAbstract {
     /**
      * Generate a new database on disk
      *

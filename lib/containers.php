@@ -7,7 +7,7 @@ $container['pdo'] = function ($container) {
 
 // Set up Slim (templating)
 $container['view'] = function ($container) {
-    $view = new \Slim\Views\Twig(__DIR__ . '/../templates');
+    $view = new \Slim\Views\Twig($container->settings['renderer']['template_path']);
 
     $view->addExtension(new Slim\Views\TwigExtension(
         $container['router'],
@@ -36,7 +36,7 @@ $container['resource_gateway'] = function ($container) {
 
 // Set up Factories
 $container['allocator_factory'] = function ($container) {
-    return new \Drakenya\ResAll\Allocators\AllocatorFactory();
+    return new \Drakenya\ResAll\Allocators\AllocatorFactory($container->settings['allocator_settings']);
 };
 
 // Set up Sentinel (user authentication library)

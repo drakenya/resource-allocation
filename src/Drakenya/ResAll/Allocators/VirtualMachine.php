@@ -2,7 +2,7 @@
 
 namespace Drakenya\ResAll\Allocators;
 
-class VirtualMachine implements AllocatorInterface {
+class VirtualMachine extends AllocatorAbstract {
     /**
      * Actually create a new resource
      *
