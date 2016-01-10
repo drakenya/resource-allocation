@@ -20,7 +20,11 @@ return [
                 'host' => 'localhost',
                 'user' => 'root',
                 'password' => 'root',
-            ]
+            ],
+            'VirtualMachine' => [
+                'base_vm_name' => 'ubuntu-provisioner',
+                'vm_path' => '~/VirtualBox VMs/',
+            ],
         ],
     ],
 ];

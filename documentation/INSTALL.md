@@ -10,3 +10,7 @@
 
 ### Optioal Packages
 - MySQL (mysql-server, mysql-client, php5-mysql)
+
+
+### Optional Programs
+- VirtualBox (with installed VM)
