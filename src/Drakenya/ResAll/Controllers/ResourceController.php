@@ -51,13 +51,7 @@ class ResourceController extends \Jgut\Slim\Controller\Base {
         // Save new request to the database
         $user_id = $this->current_user->id;
         $resource_type_id = $request->getParsedBody()['request_type'];
-        $resource_id = $this->resource_gateway->allocate_resource($resource_type_id, $user_id);
-
-        $allocator_name = $this->resource_gateway->get_allocator_name($resource_id);
-        $allocator = $this->allocator_factory->new_instance($allocator_name);
-
-        $resource_data = $allocator->allocate();
-        $this->resource_gateway->set_resource_data($resource_id, $resource_data);
+        $resource_id = $this->resource_action->create_resource($user_id, $resource_type_id);
 
         return $response->withRedirect($this->router->pathFor('resource-details', ['id' => $resource_id]));
     }
@@ -90,13 +84,7 @@ class ResourceController extends \Jgut\Slim\Controller\Base {
      */
     public function deallocate_action($request, $response, $args) {
         $resource_id = $request->getParsedBody()['resource_id'];
-        $resource_details = $this->resource_gateway->get_resource_details($resource_id);
-
-        $allocator_name = $this->resource_gateway->get_allocator_name($resource_id);
-        $allocator = $this->allocator_factory->new_instance($allocator_name);
-
-        $allocator->deallocate($resource_details);
-        $this->resource_gateway->deallocate_resource_from_user($resource_id);
+        $this->resource_action->destroy_resource($resource_id);
 
         return $response->withRedirect($this->router->pathFor('list-resources'));
     }

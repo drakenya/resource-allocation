@@ -3,9 +3,9 @@
 namespace Drakenya\ResAll\Gateways;
 
 /**
- * Handle all Resource-related queries
+ * Handle all Resource-related queries, through SQLite/PDO
  */
-class Resource {
+class ResourcePdoSqlite implements ResourceInterface {
     private $pdo;
 
     public function __construct($pdo) {
@@ -178,5 +178,27 @@ class Resource {
 
         $query = $this->pdo->prepare($sql);
         $query->execute($data);
+    }
+
+    /**
+     * Find all resources currently allocate but that have expired
+     *
+     * @return array
+     */
+    public function get_expired_resource_ids() {
+        $sql = 'SELECT id
+                FROM resources
+                WHERE is_allocated = 1
+                  AND expires_at < datetime("now", "localtime")';
+
+        $query = $this->pdo->prepare($sql);
+        $query->execute();
+
+        $return_ids = [];
+        while ($row = $query->fetch()) {
+            $return_ids[] = (int) $row['id'];
+        }
+
+        return $return_ids;
     }
 }

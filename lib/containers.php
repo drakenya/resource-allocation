@@ -17,6 +17,25 @@ $container['view'] = function ($container) {
     return $view;
 };
 
+// Set up Gateways (query class)
+$container['resource_gateway'] = function ($container) {
+    $pdo = $container['pdo'];
+    return new \Drakenya\ResAll\Gateways\ResourcePdoSqlite($pdo);
+};
+
+// Set up Factories
+$container['allocator_factory'] = function ($container) {
+    return new \Drakenya\ResAll\Allocators\AllocatorFactory($container->settings['allocator_settings']);
+};
+
+// Set up Actions (general-purpose logic containers
+$container['resource_action'] = function ($container) {
+    return new \Drakenya\ResAll\Actions\Resource(
+        $container['resource_gateway'],
+        $container['allocator_factory']
+    );
+};
+
 // Set up Controllers
 $container['IndexController'] = function ($container) {
     return new \Drakenya\ResAll\Controllers\IndexController($container);
@@ -27,16 +46,8 @@ $container['AuthController'] = function ($container) {
 $container['ResourceController'] = function ($container) {
     return new \Drakenya\ResAll\Controllers\ResourceController($container);
 };
-
-// Set up Gateways (query class)
-$container['resource_gateway'] = function ($container) {
-    $pdo = $container['pdo'];
-    return new \Drakenya\ResAll\Gateways\Resource($pdo);
-};
-
-// Set up Factories
-$container['allocator_factory'] = function ($container) {
-    return new \Drakenya\ResAll\Allocators\AllocatorFactory($container->settings['allocator_settings']);
+$container['CliController'] = function ($container) {
+    return new \Drakenya\ResAll\Controllers\CliController($container);
 };
 
 // Set up Sentinel (user authentication library)
