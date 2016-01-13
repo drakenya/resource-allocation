@@ -14,6 +14,7 @@
     "autoload": {
         "psr-4": {
             "Drakenya\\ResAll\\": "src/Drakenya/ResAll/",
+            "tests\\": "tests/",
             "Jgut\\Slim\\": "src/Jgut/Slim/"
         }
     },
@@ -30,6 +31,8 @@
         "symfony/http-foundation": "^3.0",
         "ircmaxell/password-compat": "^1.0",
         "slim/twig-view": "^2.0",
-        "paragonie/random_compat": "~1.1"
+        "paragonie/random_compat": "~1.1",
+        "phpunit/phpunit": "4.8.*",
+        "mockery/mockery": "^0.9.4"
     }
 }

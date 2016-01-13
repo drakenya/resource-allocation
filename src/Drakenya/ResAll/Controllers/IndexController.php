@@ -15,8 +15,6 @@ class IndexController extends \Jgut\Slim\Controller\Base {
    * @return \Psr\Http\Message\ResponseInterface                Final PSR7 response
    */
   public function index($request, $response, $args) {
-    return $this->view->render($response, 'index.html.twig', [
-        'name' => $args['name']
-    ]);
+    return $this->view->render($response, 'index.html.twig');
   }
 }
