@@ -18,7 +18,7 @@ class MysqlDatabase extends AllocatorAbstract {
 
         $sql_queries = [
             "CREATE DATABASE " . $new_database,
-            "CREATE USER '" . $new_user . "'@'" . $new_host . "' IDENTIFIED BY '" . $new_password . "'",
+            "CREATE USER '" . $new_user . "' IDENTIFIED BY '" . $new_password . "'",
             "GRANT ALL ON `" . $new_database . "`.* TO '" . $new_user . "'",
             "FLUSH PRIVILEGES",
         ];

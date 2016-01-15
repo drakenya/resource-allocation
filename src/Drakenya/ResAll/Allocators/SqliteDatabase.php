@@ -10,9 +10,7 @@ class SqliteDatabase extends AllocatorAbstract {
      */
     public function allocate() {
         // Allocate new database
-        $file_name = tempnam('/tmp', 'db_');
-        rename($file_name, $file_name . '.db');
-        $file_name .= '.db';
+        $file_name = tempnam(sys_get_temp_dir(), 'db_');
 
         $data = [
             'file_name' => $file_name,
