@@ -1,1 +1,1 @@
-Your Slim Framework application's log files will be written to this directory.
+The log directory. Must be writable by the web server.

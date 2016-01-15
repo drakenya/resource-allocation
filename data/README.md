@@ -1,0 +1,1 @@
+The data (and database) directory. Must be writable by the web server.
